@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {View, Button, Text, TextInput, StyleSheet} from 'react-native'
 
-45
+
 export default function() {
     const [text, handleText] = useState("");
 
