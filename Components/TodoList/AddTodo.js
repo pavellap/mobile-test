@@ -1,14 +1,27 @@
 import React, {useState} from 'react'
-import {View, Button, Text, TextInput, StyleSheet} from 'react-native'
+import {View, Button, Alert, TextInput, StyleSheet} from 'react-native'
 
 
-export default function() {
+export default function({addTodo}) {
     const [text, handleText] = useState("");
+
+    const handleAdd = () => {
+        console.log("Current text: ", text)
+        if (text !== "") {
+            addTodo({
+                title: text,
+                id: new Date().toString()
+            })
+            handleText("")
+        }
+        else
+            Alert.alert("Todo text cant be empty")
+    }
 
     return (
         <View style={styles.container}>
-            <TextInput style={styles.input}/>
-            <Button title='Add todo Item'/>
+            <TextInput value={text} onChangeText={handleText} style={styles.input} onSubmitEditing={handleAdd}/>
+            <Button title='Add todo Item' onPress={handleAdd}/>
         </View>
     )
 }

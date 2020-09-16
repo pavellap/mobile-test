@@ -1,19 +1,47 @@
 import {StatusBar} from 'expo-status-bar';
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Platform, Text, FlatList} from 'react-native';
 import NavBar from "./Components/NavBar";
 import AddTodo from "./Components/TodoList/AddTodo";
-
+import TodoItem from "./Components/TodoList/TodoItem";
+const initialTodoState = [
+    {
+        id: '1',
+        title: "First Todo"
+    },
+    {
+        id: '2',
+        title: "Second Todo"
+    },
+    {
+        id: '3',
+        title: "Third Todo"
+    },
+    {
+        id: '4',
+        title: "Fourth Todo"
+    },
+    {
+        id: '5',
+        title: "Fifth Todo"
+    },
+]
 
 export default function App() {
 
-    const [todos, handleTodos] = useState([]);
-    const addTodo = title => handleTodos(prevState => [...prevState, title])
+    const [todos, handleTodos] = useState(initialTodoState);
 
     return (
         <View style={styles.container}>
             <NavBar />
-            <AddTodo />
+            <AddTodo addTodo={item => handleTodos(prevState => [...prevState, item])}/>
+            <FlatList
+                style={styles.list}
+                data={todos}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => (<TodoItem data={item.title}/>)}
+            />
+            <Text>You are running application on platform: {Platform.OS}</Text>
             <StatusBar style="auto"/>
         </View>
     );
@@ -25,6 +53,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-start',
+    },
+    list: {
+        width: '80%',
+        paddingHorizontal: 20
     },
     input: {
         marginTop: 20,
