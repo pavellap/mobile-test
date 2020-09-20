@@ -25,11 +25,16 @@ const initialTodoState = [
         id: '5',
         title: "Fifth Todo"
     },
+    {
+        id: '6',
+        title: "Sixth Todo"
+    }
 ]
 
 export default function App() {
 
     const [todos, handleTodos] = useState(initialTodoState);
+    const removeTodo = id => handleTodos(prevState => prevState.filter(item => item.id !== id))
 
     return (
         <View style={styles.container}>
@@ -39,7 +44,7 @@ export default function App() {
                 style={styles.list}
                 data={todos}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => (<TodoItem data={item.title}/>)}
+                renderItem={({item}) => (<TodoItem handleRemove={removeTodo} data={item}/>)}
             />
             <Text>You are running application on platform: {Platform.OS}</Text>
             <StatusBar style="auto"/>
@@ -68,3 +73,5 @@ const styles = StyleSheet.create({
         fontSize: 15
     }
 });
+
+

@@ -1,13 +1,14 @@
 import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 
-export default function({ data }) {
+export default function({ data, handleRemove }) {
+    const {title, id} = data
     return (
         <TouchableOpacity
-            onLongPress={}
+            onLongPress={() => handleRemove(id)}
         >
             <View style={styles.container}>
-                <Text style={styles.text}>{data}</Text>
+                <Text style={styles.text}>{title}</Text>
             </View>
         </TouchableOpacity>
     )
